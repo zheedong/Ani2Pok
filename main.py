@@ -1,6 +1,3 @@
-<<<<<<< HEAD:main.py
-import main as gr
-=======
 import torch
 from transformers import CLIPTextModel, CLIPTokenizer
 from transformers import logging
@@ -14,8 +11,6 @@ from torchvision import transforms as tfms
 import gradio as gr
 from rembg import remove
 import cv2
->>>>>>> main:gradio.py
-
 
 def pil_to_latent(input_im):
     # Single image -> single latent in a batch (so size 1, 4, 64, 64)
@@ -57,7 +52,7 @@ def gr_magic_mix(input_image, type_prompt, nu=0.95, total_steps=50, guidance_sca
     fine_tune_steps = list(range(total_steps - t_min, total_steps))
 
     # Get embeddings for the text prompt
-    prompt = f"A cute illustration of {type_prompt} type pokemon"
+    prompt = "A cute illustration of" + type_prompt + "type pokemon"
     text_input = tokenizer(prompt, padding="max_length", max_length=tokenizer.model_max_length, truncation=True, return_tensors="pt")
     text_embeddings = text_encoder(text_input.input_ids.to(torch_device))[0]
     max_length = text_input.input_ids.shape[-1]
@@ -112,6 +107,7 @@ if __name__ == "__main__":
   logging.set_verbosity_error()
   # Set device
   torch_device = "cuda" if torch.cuda.is_available() else "cpu"
+  '''
   # Load the autoencoder model which will be used to decode the latents into image space. 
   vae = AutoencoderKL.from_pretrained("CompVis/stable-diffusion-v1-4", subfolder="vae")
   # Load the tokenizer and text encoder to tokenize and encode the text. 
@@ -119,13 +115,14 @@ if __name__ == "__main__":
   text_encoder = CLIPTextModel.from_pretrained("openai/clip-vit-large-patch14")
   # The UNet model for generating the latents.
   unet = UNet2DConditionModel.from_pretrained("CompVis/stable-diffusion-v1-4", subfolder="unet")
-  # The noise scheduler
-  scheduler = LMSDiscreteScheduler(beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear", num_train_timesteps=1000)
 
   vae = vae.to(torch_device)
   text_encoder = text_encoder.to(torch_device)
   unet = unet.to(torch_device)
+  '''
 
+  # The noise scheduler
+  scheduler = LMSDiscreteScheduler(beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear", num_train_timesteps=1000)
 
   demo = gr.Interface(
     fn=gr_magic_mix,
