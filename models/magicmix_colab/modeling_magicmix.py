@@ -10,7 +10,7 @@ import numpy
 from torchvision import transforms as tfms
 
 import numpy as np
-from torchvision.models.segmentation import fcn_resnet50
+import gradio as gr
 
 # Supress some unnecessary warnings when loading the CLIPTextModel
 logging.set_verbosity_error()
