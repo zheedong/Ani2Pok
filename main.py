@@ -1,6 +1,4 @@
-<<<<<<< HEAD:main.py
 import main as gr
-=======
 import torch
 from transformers import CLIPTextModel, CLIPTokenizer
 from transformers import logging
@@ -14,8 +12,6 @@ from torchvision import transforms as tfms
 import gradio as gr
 from rembg import remove
 import cv2
->>>>>>> main:gradio.py
-
 
 def pil_to_latent(input_im):
     # Single image -> single latent in a batch (so size 1, 4, 64, 64)
